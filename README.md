@@ -1,3 +1,4 @@
 # rickAndmorty
 
-DEMO: https://maxim-gumeniuk.github.io/rickAndmorty/
+DEMO:
+https://maxim-gumeniuk.github.io/rickAndmorty/
