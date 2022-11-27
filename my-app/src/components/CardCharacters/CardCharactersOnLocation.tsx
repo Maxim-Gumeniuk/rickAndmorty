@@ -42,37 +42,35 @@ export const CardCharactersOnLocation: React.FC<Props> = ({ characterOnLocation,
   }, [characterOnLocation]);
 
   return (
-
-    <div>
-      <p
-        className='back'
-        onClick={() => setCharacterOnLocation([])}
-      >
-        Back
-      </p>
-      <ul className='onLocation'>
-        {charOnLocation ? (
-          charOnLocation
-            .slice(firstContentIndex, lastContentIndex)
-            .map((item) => (
-              <>
+    <>
+      <div>
+        <p
+          className='back'
+          onClick={() => setCharacterOnLocation([])}
+        >
+          Back
+        </p>
+        <ul className='onLocation'>
+          {charOnLocation ? (
+            charOnLocation
+              .slice(firstContentIndex, lastContentIndex)
+              .map((item) => (
                 <li
                   className='onLocation__item'
                   key={item.id}
                 >
                   <CardCharacterOnLocationitem person={item} />
                 </li>
-                <Pagination
-                  nextPage={nextPage}
-                  prevPage={prevPage}
-                  page={page}
-                  setPage={setPage}
-                  totalPages={totalPages}
-                />
-              </>
-            ))) : (<Loader />)}
-      </ul>
-    </div>
-
+              ))) : (<Loader />)}
+        </ul>
+      </div>
+      <Pagination
+        nextPage={nextPage}
+        prevPage={prevPage}
+        page={page}
+        setPage={setPage}
+        totalPages={totalPages}
+      />
+    </>
   );
 };

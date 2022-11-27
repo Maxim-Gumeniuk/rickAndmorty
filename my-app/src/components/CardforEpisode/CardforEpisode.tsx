@@ -52,22 +52,20 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
           charOfEpisode.
             slice(firstContentIndex, lastContentIndex)
             .map((char) => (
-              <>
-                <li
-                  key={char.id}
-                >
-                  <CardforEpisodeItem character={char} />
-                </li>
-                <Pagination
-                  nextPage={nextPage}
-                  prevPage={prevPage}
-                  page={page}
-                  setPage={setPage}
-                  totalPages={totalPages}
-                />
-              </>
+              <li
+                key={char.id}
+              >
+                <CardforEpisodeItem character={char} />
+              </li>
             ))) : (<Loader />)}
       </ul>
+      <Pagination
+        nextPage={nextPage}
+        prevPage={prevPage}
+        page={page}
+        setPage={setPage}
+        totalPages={totalPages}
+      />
     </>
   );
 };
