@@ -1,0 +1,30 @@
+@import '../../source/placehorder.scss';
+@import '../../source/variables.scss';
+
+
+.onEpisode {
+  min-width: 100%;
+  display: flex;
+  @extend %style-for-card-char;
+}
+
+.onEpisode-location {
+  &__image {
+    border: 2px solid $font-color;
+    border-radius: 50%;
+  }
+
+  &__name {
+    font-size: 20px;
+    color: $font-color;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+  }
+}
+
+.back {
+  @extend %for-back;
+  color: $font-color;
+  @extend %style-for-fonts;
+}

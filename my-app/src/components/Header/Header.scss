@@ -1,0 +1,27 @@
+.nav {
+  &__list {
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    @media(max-width:767px) {
+      justify-content: center;
+    }
+  }
+
+  &__link {
+    color: #a877dc;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 150%;
+    text-decoration: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+
+    @media(max-width:767px) {
+      padding: 5px 6px;
+      font-size: 14px;
+    }
+  }
+}

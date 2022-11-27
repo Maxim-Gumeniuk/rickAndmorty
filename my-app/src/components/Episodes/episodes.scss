@@ -1,0 +1,35 @@
+@import '../../source/placehorder.scss';
+
+.episodes {
+  &__list {
+    @extend %flex-box;
+    flex-direction: column;
+    flex-basis: 20%;
+  }
+}
+
+.episode {
+  border: 1px solid #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #05FF1E;
+  border-radius: 50%;
+  width: 280px;
+  height: 280px;
+  padding: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform, 0.5s;
+
+  &:hover {
+    transform: scale(0.8);
+  }
+  
+  &__date {
+    line-height: 150%;
+    margin-bottom: 10px;
+  }
+}

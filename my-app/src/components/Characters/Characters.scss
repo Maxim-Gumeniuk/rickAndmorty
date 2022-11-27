@@ -1,0 +1,41 @@
+@import '../../source/placehorder.scss';
+
+.character {
+  border: 1px solid #000;
+  border-radius: 20px;
+  padding: 10px;
+  color:#fff;
+
+  &__box {
+    @extend %flex-box;
+    flex-direction: column;
+    background-color: #28d30d;
+    transition: transform, 0.5s;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__image {
+    border: 1px solid #fff;
+    border-radius: 25px;
+    margin-top: -20px;
+    margin-left: -50px;
+    margin-bottom: 20px;
+  }
+
+  &__name {
+    text-transform: uppercase;
+    line-height: 150%;
+  }
+}
+
+.title {
+  color: #fff;
+  font-size: 50px;
+  font-weight: 800;
+  line-height: 200%;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 20px;
+}

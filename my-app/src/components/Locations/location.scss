@@ -1,0 +1,33 @@
+@import '../../source/placehorder.scss';
+
+.locations {
+  &__item {
+    @extend %flex-box;
+    flex-direction: column;
+    flex-basis: 20%;
+  }
+}
+
+.location {
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #fff;
+  justify-content: center;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #05FF1E;
+  border-radius: 50%;
+  width: 280px;
+  height: 280px;
+  padding: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform, 0.5s;
+
+  &:hover {
+    transform: scale(1.05);
+    transform: rotate(20deg);
+  }
+  
+}
