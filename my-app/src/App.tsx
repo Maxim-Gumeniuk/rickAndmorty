@@ -107,7 +107,7 @@ function App() {
 
                 <Route path="Locations" element={<LocationList Locations={filterLocations} setQuery={setQuery} />} />
                 <Route path="Episodes" element={<EpisodeList Episodes={filterEpisodes} setQuery={setQuery} />} />
-                <Route path="*" element={<p>Page Not Found</p>} />
+                <Route path="*" element={<Loader />} />
               </Routes>
             </div>
             <div className="bottom">
