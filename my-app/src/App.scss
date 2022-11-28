@@ -1,4 +1,6 @@
 @import './source/placehorder.scss';
+@import './source/Variables.scss';
+
 
 .wrapper {
   min-height: 100%;
@@ -21,5 +23,24 @@
 .flex-row {
   @extend %style-for-card-char;
   @extend %flex-box;
+}
 
+.home-title {
+  font-size: 100px;
+  font-weight: 800;
+  color: $font-color;
+  margin-left: 90px;
+  animation-name: title;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-direction: normal;
+}
+
+@keyframes title {
+0% {
+  transform: scale(1.5);
+}
+100% {
+  transform: scale(1);
+}
 }

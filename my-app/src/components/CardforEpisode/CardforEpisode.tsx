@@ -49,8 +49,8 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
       </p>
       <ul className='onEpisode'>
         {charOfEpisode ? (
-          charOfEpisode.
-            slice(firstContentIndex, lastContentIndex)
+          charOfEpisode
+            .slice(firstContentIndex, lastContentIndex)
             .map((char) => (
               <li
                 key={char.id}

@@ -98,8 +98,8 @@ function App() {
             </div>
             <div className="content">
               <Routes>
-                <Route path="/" element={<h2>home page</h2>} />
-                <Route path="home" element={<Navigate to="/" />} />
+                <Route path="/rickAndmorty" element={<h1 className='home-title'>Rick and Morty</h1>} />
+                <Route path="home" element={<Navigate to="/rickAndmorty" />} />
                 <Route path='Characters'>
                   <Route index element={<CharactersList Characters={filterCharacters} setQuery={setQuery} setCharacterOnId={setCharacterOnId}/>} />
                   <Route path=":CharactersId" element={<CardId characterOnId={characterOnId} />} />
@@ -107,7 +107,7 @@ function App() {
 
                 <Route path="Locations" element={<LocationList Locations={filterLocations} setQuery={setQuery} />} />
                 <Route path="Episodes" element={<EpisodeList Episodes={filterEpisodes} setQuery={setQuery} />} />
-                <Route path="*" element={<p>page not found</p>} />
+                <Route path="*" element={<Navigate to="/rickAndmorty" />} />
               </Routes>
             </div>
             <div className="bottom">
