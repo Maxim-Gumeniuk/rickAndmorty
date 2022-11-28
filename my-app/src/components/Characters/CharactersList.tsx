@@ -44,7 +44,8 @@ export const CharactersList: React.FC<Props> = ({ Characters, setQuery, setChara
         {Characters
           .slice(firstContentIndex, lastContentIndex)
           .map((character: Characters) => (
-            <Link 
+            <Link
+              className='link-report' 
               to={`/Characters/${character.id}`} 
               key={character.id}
             >

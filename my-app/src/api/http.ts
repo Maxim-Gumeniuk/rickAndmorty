@@ -2,12 +2,12 @@ import axios from 'axios';
 
 const BASE_URL = 'https://rickandmortyapi.com/api';
 
-export const getAllCharacters = () => {
+export function getAllCharacters() {
   return axios(`${BASE_URL}/character`)
     .then(data => data.data)
     .then(respone => respone.results)
     .catch(e => console.log(e));
-};
+}
 
 export const getAllLocation = () => {
   return axios(`${BASE_URL}/location`)
