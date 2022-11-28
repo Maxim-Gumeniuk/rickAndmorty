@@ -1,4 +1,4 @@
-DEMO LINK : https://maxim-gumeniuk.github.io/rickAndmorty/
+DEMO LINK : `https://maxim-gumeniuk.github.io/rickAndmorty/`
 
 
 # Getting Started with Create React App
