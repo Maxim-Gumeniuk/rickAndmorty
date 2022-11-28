@@ -1,4 +1,6 @@
-DEMO LINK : `https://maxim-gumeniuk.github.io/rickAndmorty/`
+DEMO LINK : https://maxim-gumeniuk.github.io/rickAndmorty/
+
+Stack: TS, JS, REACT.JS, SASS(SCSS), HTML5
 
 
 # Getting Started with Create React App
