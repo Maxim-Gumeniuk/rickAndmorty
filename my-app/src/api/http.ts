@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = 'https://rickandmortyapi.com/api';
 
-export function getAllCharacters() {
+export const getAllCharacters = () => {
   return axios(`${BASE_URL}/character`)
     .then(data => data.data)
     .then(respone => respone.results)
