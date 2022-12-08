@@ -25,7 +25,7 @@ export const Header = () => {
         </li>
         <li className='nav__item'>
           <NavLink
-            to="Characterss"
+            to="Characters"
             className='nav__link'
             onClick={() => clearCurrentId()}
           >
