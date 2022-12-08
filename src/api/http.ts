@@ -7,7 +7,7 @@ export const getAllCharacters = () => {
     .then(data => data.data)
     .then(respone => respone.results)
     .catch(e => console.log(e));
-}
+};
 
 export const getAllLocation = () => {
   return axios(`${BASE_URL}/location`)

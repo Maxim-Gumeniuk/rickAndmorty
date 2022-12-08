@@ -13,7 +13,7 @@ type Props = {
 }
 
 export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacterEpisode }) => {
-  const [charOfEpisode, setCharOfEpisode] = useState<Characters[]>();
+  const [charOfEpisode, setCharOfEpisode] = useState<Characters[]>([]);
 
   const {
     firstContentIndex,
@@ -27,6 +27,9 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
     contentPerPage: 10,
     count: CharacterEpisode.length,
   });
+
+
+  //trycatch
   useEffect(() => {
     async function getAllCharForEpisode() {
       const data = await Promise.all(
@@ -39,7 +42,9 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
       setCharOfEpisode(data);
     }
     getAllCharForEpisode();
-  }, [CharacterEpisode]);
+  }, [charOfEpisode]);
+
+  console.log(charOfEpisode);
 
   return (
     <>
@@ -48,7 +53,7 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
       > Back
       </p>
       <ul className='onEpisode'>
-        {charOfEpisode ? (
+        {charOfEpisode.length > 0 ? (
           charOfEpisode
             .slice(firstContentIndex, lastContentIndex)
             .map((char) => (

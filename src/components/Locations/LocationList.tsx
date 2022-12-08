@@ -6,14 +6,12 @@ import './location.scss';
 import usePagination from '../../hooks/usePagination';
 import { Pagination } from '../Pagination/Pagination';
 import { CardCharactersOnLocation } from '../CardCharacters/CardCharactersOnLocation';
+import { getAllLocation } from '../../api/http';
 
-type Props = {
-  Locations: Locations[];
-  setQuery: (param: string) => void;
-}
-
-export const LocationList: React.FC<Props> = ({ Locations, setQuery }) => {
+export const LocationList: React.FC = ( ) => {
   const [characterOnLocation, setCharacterOnLocation] = useState<string[]>([]);
+  const [Locations, setLocations] = useState<Locations[]>([]);
+  const [Query, setQuery] = useState('');
   const {
     firstContentIndex,
     lastContentIndex,
@@ -27,8 +25,34 @@ export const LocationList: React.FC<Props> = ({ Locations, setQuery }) => {
     count: characterOnLocation.length,
   });
 
+  async function setAllLocation() {
+    try {
+      const locations = await getAllLocation();
+
+      setLocations(locations);
+    } catch (error) {
+      throw new Error('error');
+    }
+  }
+
+  const handleCheckItem = (...itemPart: string[]) => {
+    return (
+      itemPart.find(itemInfo => {
+        return itemInfo.toLowerCase().includes(Query.toLocaleLowerCase());
+      })
+    );
+  };
+
+  const filterLocations = Locations.filter((location) => {
+    const { name, type, dimension } = location;
+
+    return (
+      handleCheckItem(name, type, dimension)
+    );
+  });
+
   useEffect(() => {
-    setQuery('');
+    setAllLocation();
   }, []);
 
   return (
@@ -42,7 +66,7 @@ export const LocationList: React.FC<Props> = ({ Locations, setQuery }) => {
               <p className='title'> Just click on the card </p>
               <ul className='flex-row'>
 
-                {Locations
+                {filterLocations
                   .slice(firstContentIndex, lastContentIndex)
                   .map((location: Locations) => (
                     <li

@@ -6,13 +6,12 @@ import { FilterForm } from '../Form/FilterForm';
 import usePagination from '../../hooks/usePagination';
 import { Pagination } from '../Pagination/Pagination';
 import { CardforEpisode } from '../CardforEpisode/CardforEpisode';
+import { getAllEpisodes } from '../../api/http';
 
-type Props = {
-  Episodes: Episodes[];
-  setQuery: (param: string) => void;
-}
-export const EpisodeList: React.FC<Props> = ({ Episodes, setQuery }) => {
+export const EpisodeList: React.FC = () => {
   const [CharacterEpisode, setCharacterEpisode] = useState<string[]>([]);
+  const [Episodes, setEpisodes] = useState<Episodes[]>([]);
+  const [Query, setQuery] = useState('');
   const {
     firstContentIndex,
     lastContentIndex,
@@ -26,10 +25,35 @@ export const EpisodeList: React.FC<Props> = ({ Episodes, setQuery }) => {
     count: Episodes.length,
   });
 
-  console.log(Episodes);
+  async function setAllEpisodes() {
+    try {
+      const episodes = await getAllEpisodes();
+
+      setEpisodes(episodes);
+    } catch (error) {
+      throw new Error('error');
+    }
+  }
+
+  const handleCheckItem = (...itemPart: string[]) => {
+    return (
+      itemPart.find(itemInfo => {
+        return itemInfo.toLowerCase().includes(Query.toLocaleLowerCase());
+      })
+    );
+  };
+
+  const filterEpisodes = Episodes.filter((episode) => {
+    const { name, air_date } = episode;
+
+    return (
+      handleCheckItem(name, air_date)
+    );
+  });
 
   useEffect(() => {
     setQuery('');
+    setAllEpisodes();
   }, []);
   return (
     <>
@@ -39,7 +63,7 @@ export const EpisodeList: React.FC<Props> = ({ Episodes, setQuery }) => {
           <FilterForm setQuery={setQuery} />
           <p className='title'> Just click on the card </p>
           <ul className='flex-row'>
-            {Episodes
+            {filterEpisodes
               .slice(firstContentIndex, lastContentIndex)
               .map((episodes: Episodes) => (
                 <li
