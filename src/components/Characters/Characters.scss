@@ -10,7 +10,7 @@
     @extend %flex-box;
     flex-direction: column;
     background-color: #28d30d;
-    transition: transform, 0.5s;
+    transition: transform, 0.5s ease-in-out;
     &:hover {
       transform: scale(1.05);
     }
