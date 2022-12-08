@@ -7,11 +7,14 @@ import usePagination from '../../hooks/usePagination';
 import { Pagination } from '../Pagination/Pagination';
 import { CardCharactersOnLocation } from '../CardCharacters/CardCharactersOnLocation';
 import { getAllLocation } from '../../api/http';
+import { Loader } from '../Loader/Loader';
+import { handleCheckItem } from '../../source/checkItem';
 
-export const LocationList: React.FC = ( ) => {
+export const LocationList: React.FC = () => {
   const [characterOnLocation, setCharacterOnLocation] = useState<string[]>([]);
   const [Locations, setLocations] = useState<Locations[]>([]);
   const [Query, setQuery] = useState('');
+  const [loading, setLoading] = useState(false);
   const {
     firstContentIndex,
     lastContentIndex,
@@ -32,22 +35,18 @@ export const LocationList: React.FC = ( ) => {
       setLocations(locations);
     } catch (error) {
       throw new Error('error');
+    } finally {
+      setTimeout(() => {
+        setLoading(true);
+      }, 1000);
     }
   }
-
-  const handleCheckItem = (...itemPart: string[]) => {
-    return (
-      itemPart.find(itemInfo => {
-        return itemInfo.toLowerCase().includes(Query.toLocaleLowerCase());
-      })
-    );
-  };
 
   const filterLocations = Locations.filter((location) => {
     const { name, type, dimension } = location;
 
     return (
-      handleCheckItem(name, type, dimension)
+      handleCheckItem(Query, name, type, dimension)
     );
   });
 
@@ -57,36 +56,40 @@ export const LocationList: React.FC = ( ) => {
 
   return (
     <>
-      {characterOnLocation.length > 0
-        ? (
-          <CardCharactersOnLocation characterOnLocation={characterOnLocation} setCharacterOnLocation={setCharacterOnLocation} />) : (
-          (
-            <>
-              <FilterForm setQuery={setQuery} />
-              <p className='title'> Just click on the card </p>
-              <ul className='flex-row'>
+      {loading ? (<>
+        {characterOnLocation.length
+          ? (
+            <CardCharactersOnLocation characterOnLocation={characterOnLocation} setCharacterOnLocation={setCharacterOnLocation} />) : (
+            (
+              <>
+                <FilterForm setQuery={setQuery} />
+                <p className='title'> Just click on the card </p>
+                <ul className='flex-row'>
 
-                {filterLocations
-                  .slice(firstContentIndex, lastContentIndex)
-                  .map((location: Locations) => (
-                    <li
-                      key={location.id}
-                      onClick={() => setCharacterOnLocation(location.residents)}
-                    >
-                      <LocationItem location={location} />
-                    </li>
-                  ))}
-              </ul >
+                  {filterLocations
+                    .slice(firstContentIndex, lastContentIndex)
+                    .map((location: Locations) => (
+                      <li
+                        key={location.id}
+                        onClick={() => setCharacterOnLocation(location.residents)}
+                      >
+                        <LocationItem location={location} />
+                      </li>
+                    ))}
+                </ul >
 
-              <Pagination
-                nextPage={nextPage}
-                prevPage={prevPage}
-                page={page}
-                setPage={setPage}
-                totalPages={totalPages}
-              />
-            </>
-          ))}
+                <Pagination
+                  nextPage={nextPage}
+                  prevPage={prevPage}
+                  page={page}
+                  setPage={setPage}
+                  totalPages={totalPages}
+                />
+              </>
+            ))}
+      </>
+      ) : (<Loader />)}
+
     </>
   );
 };

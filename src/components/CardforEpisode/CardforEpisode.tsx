@@ -14,6 +14,7 @@ type Props = {
 
 export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacterEpisode }) => {
   const [charOfEpisode, setCharOfEpisode] = useState<Characters[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const {
     firstContentIndex,
@@ -28,10 +29,8 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
     count: CharacterEpisode.length,
   });
 
-
-  //trycatch
-  useEffect(() => {
-    async function getAllCharForEpisode() {
+  async function getAllCharForEpisode() {
+    try {
       const data = await Promise.all(
         CharacterEpisode.map((item) => {
           return axios(item)
@@ -40,37 +39,47 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
         })
       );
       setCharOfEpisode(data);
+    } catch {
+      throw new Error();
+    } finally {
+      setTimeout(() => {
+        setLoading(true);
+      }, 2000);
     }
+  }
+
+  useEffect(() => {
     getAllCharForEpisode();
   }, [charOfEpisode]);
 
-  console.log(charOfEpisode);
-
   return (
     <>
-      <p className='back'
-        onClick={() => setCharacterEpisode([])}
-      > Back
-      </p>
-      <ul className='onEpisode'>
-        {charOfEpisode.length > 0 ? (
-          charOfEpisode
-            .slice(firstContentIndex, lastContentIndex)
-            .map((char) => (
-              <li
-                key={char.id}
-              >
-                <CardforEpisodeItem character={char} />
-              </li>
-            ))) : (<Loader />)}
-      </ul>
-      <Pagination
-        nextPage={nextPage}
-        prevPage={prevPage}
-        page={page}
-        setPage={setPage}
-        totalPages={totalPages}
-      />
+      {loading ? (<>
+        <p className='back'
+          onClick={() => setCharacterEpisode([])}
+        > Back
+        </p>
+        <ul className='onEpisode'>
+          {charOfEpisode.length > 0 ? (
+            charOfEpisode
+              .slice(firstContentIndex, lastContentIndex)
+              .map((char) => (
+                <li
+                  key={char.id}
+                >
+                  <CardforEpisodeItem character={char} />
+                </li>
+              ))) : (<Loader />)}
+        </ul>
+        <Pagination
+          nextPage={nextPage}
+          prevPage={prevPage}
+          page={page}
+          setPage={setPage}
+          totalPages={totalPages}
+        /></>
+      ) : (<Loader />)}
+
     </>
   );
 };

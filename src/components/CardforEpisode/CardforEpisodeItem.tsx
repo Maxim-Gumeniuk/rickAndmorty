@@ -5,7 +5,6 @@ type Props = {
   character: Characters;
 }
 
-
 export const CardforEpisodeItem: React.FC<Props> = ({ character }) => {
   const { name, image } = character;
   return (

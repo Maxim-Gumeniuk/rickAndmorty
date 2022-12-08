@@ -7,11 +7,15 @@ import usePagination from '../../hooks/usePagination';
 import { Pagination } from '../Pagination/Pagination';
 import { CardforEpisode } from '../CardforEpisode/CardforEpisode';
 import { getAllEpisodes } from '../../api/http';
+import { Loader } from '../Loader/Loader';
+import { handleCheckItem } from '../../source/checkItem';
 
 export const EpisodeList: React.FC = () => {
   const [CharacterEpisode, setCharacterEpisode] = useState<string[]>([]);
   const [Episodes, setEpisodes] = useState<Episodes[]>([]);
   const [Query, setQuery] = useState('');
+  const [loading, setLoading] = useState(false);
+
   const {
     firstContentIndex,
     lastContentIndex,
@@ -32,56 +36,55 @@ export const EpisodeList: React.FC = () => {
       setEpisodes(episodes);
     } catch (error) {
       throw new Error('error');
+    } finally {
+      setTimeout(() => {
+        setLoading(true);
+      }, 1000);
     }
   }
-
-  const handleCheckItem = (...itemPart: string[]) => {
-    return (
-      itemPart.find(itemInfo => {
-        return itemInfo.toLowerCase().includes(Query.toLocaleLowerCase());
-      })
-    );
-  };
 
   const filterEpisodes = Episodes.filter((episode) => {
     const { name, air_date } = episode;
 
     return (
-      handleCheckItem(name, air_date)
+      handleCheckItem(Query, name, air_date)
     );
   });
 
   useEffect(() => {
-    setQuery('');
     setAllEpisodes();
   }, []);
   return (
     <>
-      {CharacterEpisode.length > 0 ?
-        (<CardforEpisode CharacterEpisode={CharacterEpisode} setCharacterEpisode={setCharacterEpisode} />) :
-        (<>
-          <FilterForm setQuery={setQuery} />
-          <p className='title'> Just click on the card </p>
-          <ul className='flex-row'>
-            {filterEpisodes
-              .slice(firstContentIndex, lastContentIndex)
-              .map((episodes: Episodes) => (
-                <li
-                  key={episodes.id}
-                  onClick={() => { setCharacterEpisode(episodes.characters); }}
-                >
-                  <EpisodesItem episodes={episodes} />
-                </li>
-              ))}
-          </ul >
-          <Pagination
-            nextPage={nextPage}
-            prevPage={prevPage}
-            page={page}
-            setPage={setPage}
-            totalPages={totalPages}
-          />
-        </>)}
+      {loading ? (<>
+        {CharacterEpisode.length ?
+          (<CardforEpisode CharacterEpisode={CharacterEpisode} setCharacterEpisode={setCharacterEpisode} />) :
+          (<>
+            <FilterForm setQuery={setQuery} />
+            <p className='title'> Just click on the card </p>
+            <ul className='flex-row'>
+              {filterEpisodes
+                .slice(firstContentIndex, lastContentIndex)
+                .map((episodes: Episodes) => (
+                  <li
+                    key={episodes.id}
+                    onClick={() => { setCharacterEpisode(episodes.characters); }}
+                  >
+                    <EpisodesItem episodes={episodes} />
+                  </li>
+                ))}
+            </ul >
+            <Pagination
+              nextPage={nextPage}
+              prevPage={prevPage}
+              page={page}
+              setPage={setPage}
+              totalPages={totalPages}
+            />
+          </>
+          )}
+      </>
+      ) : (<Loader />) }
     </>
   );
 };

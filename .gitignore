@@ -24,5 +24,4 @@ yarn-error.log*
 .eslintrc.json
 .prettierrc.json
 .prettierrc.json
-tsconfig.json
 package-lock.json

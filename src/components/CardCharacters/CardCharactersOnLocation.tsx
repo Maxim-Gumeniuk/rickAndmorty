@@ -14,6 +14,7 @@ type Props = {
 
 export const CardCharactersOnLocation: React.FC<Props> = ({ characterOnLocation, setCharacterOnLocation }) => {
   const [charOnLocation, setCharOnLocation] = useState<Characters[]>();
+  const [loading, setLoading] = useState(false);
   const {
     firstContentIndex,
     lastContentIndex,
@@ -27,8 +28,8 @@ export const CardCharactersOnLocation: React.FC<Props> = ({ characterOnLocation,
     count: characterOnLocation.length,
   });
 
-  useEffect(() => {
-    async function getAllCharFromLocation() {
+  async function getAllCharFromLocation() {
+    try {
       const chars = await Promise.all(
         characterOnLocation.map((char) => {
           return axios(char)
@@ -37,13 +38,22 @@ export const CardCharactersOnLocation: React.FC<Props> = ({ characterOnLocation,
         })
       );
       setCharOnLocation(chars);
+    } catch {
+      throw new Error();
+    } finally {
+      setTimeout(() => {
+        setLoading(true);
+      }, 2000);
     }
+  }
+
+  useEffect(() => {
     getAllCharFromLocation();
   }, [characterOnLocation]);
 
   return (
     <>
-      <div>
+      {loading ? (<> <div>
         <p
           className='back'
           onClick={() => setCharacterOnLocation([])}
@@ -71,6 +81,8 @@ export const CardCharactersOnLocation: React.FC<Props> = ({ characterOnLocation,
         setPage={setPage}
         totalPages={totalPages}
       />
+      </>) : (<Loader />)}
+
     </>
   );
 };
