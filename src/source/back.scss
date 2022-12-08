@@ -1,0 +1,9 @@
+@import './placehorder.scss';
+@import './Variables.scss';
+
+.back {
+  @extend %for-back;
+  color: $font-color;
+  @extend %style-for-fonts;
+  text-decoration: none;
+}

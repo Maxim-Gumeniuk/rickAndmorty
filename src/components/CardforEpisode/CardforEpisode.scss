@@ -1,7 +1,6 @@
 @import '../../source/placehorder.scss';
 @import '../../source/variables.scss';
 
-
 .onEpisode {
   min-width: 100%;
   display: flex;
@@ -21,10 +20,4 @@
     text-transform: uppercase;
     text-align: center;
   }
-}
-
-.back {
-  @extend %for-back;
-  color: $font-color;
-  @extend %style-for-fonts;
 }

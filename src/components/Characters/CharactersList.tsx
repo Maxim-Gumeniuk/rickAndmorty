@@ -8,12 +8,15 @@ import { Link } from 'react-router-dom';
 import { getAllCharacters } from '../../api/http';
 import { Loader } from '../Loader/Loader';
 import { handleCheckItem } from '../../source/checkItem';
+import { useAppDispatch } from '../../app/hooks';
+import { actions as currentCharacterAction} from '../../features/currentCharacter';
 
 export const CharactersList: React.FC = () => {
   const [Characters, setCharacters] = useState<Characters[]>([]);
   const [Query, setQuery] = useState('');
   const [characterOnId, setCharacterOnId] = useState<Characters | null>(null);
   const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   const {
     firstContentIndex,
@@ -28,6 +31,9 @@ export const CharactersList: React.FC = () => {
     count: Characters.length,
   });
 
+  const changeCurrentCharacter = (character: Characters) => {
+    dispatch(currentCharacterAction.setCharacter(character));
+  };
 
   async function setAllCharacters() {
     try {
@@ -51,11 +57,6 @@ export const CharactersList: React.FC = () => {
     );
   });
 
-  const findCharacter = (id: number) => {
-    const person = Characters.find(char => char.id === id);
-    setCharacterOnId(person || null);
-  };
-
   useEffect(() => {
     setAllCharacters();
   }, []);
@@ -77,7 +78,7 @@ export const CharactersList: React.FC = () => {
                   key={character.id}
                 >
                   <li
-                    onClick={() => findCharacter(character.id)}
+                    onClick={() => changeCurrentCharacter(character)}
                   >
                     <CharactersItem character={character} />
                   </li>
@@ -93,7 +94,6 @@ export const CharactersList: React.FC = () => {
           />
         </>
       ) : (<Loader />) }
-
     </>
   );
 };

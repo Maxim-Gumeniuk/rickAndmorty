@@ -1,4 +1,5 @@
 import './CardCharactersOnLocation.scss';
+import '../../source/back.scss';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Characters } from '../../types/Characters';
@@ -6,15 +7,22 @@ import { Pagination } from '../Pagination/Pagination';
 import usePagination from '../../hooks/usePagination';
 import { CardCharacterOnLocationitem } from './CardCharacterOnLocationitem';
 import { Loader } from '../Loader/Loader';
+import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../app/hooks';
+import { actions as currentCharacterAction} from '../../features/currentCharacter';
 
 type Props = {
   characterOnLocation: string[];
   setCharacterOnLocation: (param: string[]) => void;
 }
 
-export const CardCharactersOnLocation: React.FC<Props> = ({ characterOnLocation, setCharacterOnLocation }) => {
+export const CardCharactersOnLocation: React.FC<Props> = ({
+  characterOnLocation,
+  setCharacterOnLocation
+}) => {
   const [charOnLocation, setCharOnLocation] = useState<Characters[]>();
   const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
   const {
     firstContentIndex,
     lastContentIndex,
@@ -47,6 +55,10 @@ export const CardCharactersOnLocation: React.FC<Props> = ({ characterOnLocation,
     }
   }
 
+  const changeCurrentCharacter = (character: Characters) => {
+    dispatch(currentCharacterAction.setCharacter(character));
+  };
+
   useEffect(() => {
     getAllCharFromLocation();
   }, [characterOnLocation]);
@@ -65,12 +77,18 @@ export const CardCharactersOnLocation: React.FC<Props> = ({ characterOnLocation,
             charOnLocation
               .slice(firstContentIndex, lastContentIndex)
               .map((item) => (
-                <li
-                  className='onLocation__item'
+                <Link 
+                  className='link-report'
+                  to={`/Characters/${item.id}`}
                   key={item.id}
                 >
-                  <CardCharacterOnLocationitem person={item} />
-                </li>
+                  <li
+                    className='onLocation__item'
+                    onClick={() => changeCurrentCharacter(item)}  
+                  >
+                    <CardCharacterOnLocationitem person={item} />
+                  </li>
+                </Link>
               ))) : (<Loader />)}
         </ul>
       </div>

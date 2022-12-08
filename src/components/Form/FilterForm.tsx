@@ -18,7 +18,6 @@ export const FilterForm: React.FC<Props> = ({ setQuery }) => {
             placeholder="Type search word"
             onChange={(event) => {
               const { value } = event.target;
-
               setQuery(value);
             }}
           />

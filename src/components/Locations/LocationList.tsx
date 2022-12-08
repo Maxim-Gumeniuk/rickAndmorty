@@ -89,7 +89,6 @@ export const LocationList: React.FC = () => {
             ))}
       </>
       ) : (<Loader />)}
-
     </>
   );
 };

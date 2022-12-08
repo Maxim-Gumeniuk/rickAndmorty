@@ -1,4 +1,5 @@
 import axios from 'axios';
+import '../../source/back.scss';
 import React, { useEffect, useState } from 'react';
 import usePagination from '../../hooks/usePagination';
 import { Characters } from '../../types/Characters';
@@ -6,6 +7,9 @@ import { Pagination } from '../Pagination/Pagination';
 import { CardforEpisodeItem } from './CardforEpisodeItem';
 import './CardforEpisode.scss';
 import { Loader } from '../Loader/Loader';
+import { useAppDispatch } from '../../app/hooks';
+import { actions as currentCharacterAction} from '../../features/currentCharacter';
+import { Link } from 'react-router-dom';
 
 type Props = {
   CharacterEpisode: string[];
@@ -15,6 +19,7 @@ type Props = {
 export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacterEpisode }) => {
   const [charOfEpisode, setCharOfEpisode] = useState<Characters[]>([]);
   const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   const {
     firstContentIndex,
@@ -28,6 +33,11 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
     contentPerPage: 10,
     count: CharacterEpisode.length,
   });
+
+  
+  const changeCurrentCharacter = (character: Characters) => {
+    dispatch(currentCharacterAction.setCharacter(character));
+  };
 
   async function getAllCharForEpisode() {
     try {
@@ -64,11 +74,15 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
             charOfEpisode
               .slice(firstContentIndex, lastContentIndex)
               .map((char) => (
-                <li
+                <Link 
+                  to={`/Characters/${char.id}`}
                   key={char.id}
                 >
-                  <CardforEpisodeItem character={char} />
-                </li>
+                  <li
+                    onClick={() => changeCurrentCharacter(char)}>
+                    <CardforEpisodeItem character={char} />
+                  </li>
+                </Link>
               ))) : (<Loader />)}
         </ul>
         <Pagination
@@ -79,7 +93,6 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
           totalPages={totalPages}
         /></>
       ) : (<Loader />)}
-
     </>
   );
 };

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { UsePagination } from '../types/UsePagination';
 
-
 const usePagination: UsePagination = ({ contentPerPage, count }) => {
   const [page, setPage] = useState(1);
   const pageCount = Math.ceil(count / contentPerPage);
