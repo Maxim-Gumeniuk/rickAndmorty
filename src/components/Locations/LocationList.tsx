@@ -77,7 +77,6 @@ export const LocationList: React.FC = () => {
                       </li>
                     ))}
                 </ul >
-
                 <Pagination
                   nextPage={nextPage}
                   prevPage={prevPage}

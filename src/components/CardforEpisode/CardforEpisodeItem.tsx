@@ -12,6 +12,5 @@ export const CardforEpisodeItem: React.FC<Props> = ({ character }) => {
       <img className='onEpisode-location__image' src={image} />
       <p className='onEpisode-location__name'>{name}</p>
     </div>
-
   );
 };

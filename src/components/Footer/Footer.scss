@@ -4,11 +4,11 @@
 .footer {
   @extend %style-for-fonts;
   &__content {
-    color: $font-color;
-    height: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 50px;
+    color: $font-color;
   }
 }

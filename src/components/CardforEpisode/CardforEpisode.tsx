@@ -34,8 +34,7 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
     count: CharacterEpisode.length,
   });
 
-  
-  const changeCurrentCharacter = (character: Characters) => {
+  const changeCurrentCharacter = (character: number) => {
     dispatch(currentCharacterAction.setCharacter(character));
   };
 
@@ -58,6 +57,11 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
     }
   }
 
+  const clearCurrentId = () => {
+    setCharacterEpisode([]);
+    dispatch(currentCharacterAction.clear());
+  };
+
   useEffect(() => {
     getAllCharForEpisode();
   }, [charOfEpisode]);
@@ -66,11 +70,11 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
     <>
       {loading ? (<>
         <p className='back'
-          onClick={() => setCharacterEpisode([])}
+          onClick={() => clearCurrentId()}
         > Back
         </p>
         <ul className='onEpisode'>
-          {charOfEpisode.length > 0 ? (
+          {charOfEpisode.length > 0 && (
             charOfEpisode
               .slice(firstContentIndex, lastContentIndex)
               .map((char) => (
@@ -79,11 +83,11 @@ export const CardforEpisode: React.FC<Props> = ({ CharacterEpisode, setCharacter
                   key={char.id}
                 >
                   <li
-                    onClick={() => changeCurrentCharacter(char)}>
+                    onClick={() => changeCurrentCharacter(char.id)}>
                     <CardforEpisodeItem character={char} />
                   </li>
                 </Link>
-              ))) : (<Loader />)}
+              )))}
         </ul>
         <Pagination
           nextPage={nextPage}

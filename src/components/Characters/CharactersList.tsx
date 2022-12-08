@@ -14,7 +14,6 @@ import { actions as currentCharacterAction} from '../../features/currentCharacte
 export const CharactersList: React.FC = () => {
   const [Characters, setCharacters] = useState<Characters[]>([]);
   const [Query, setQuery] = useState('');
-  const [characterOnId, setCharacterOnId] = useState<Characters | null>(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -31,7 +30,7 @@ export const CharactersList: React.FC = () => {
     count: Characters.length,
   });
 
-  const changeCurrentCharacter = (character: Characters) => {
+  const changeCurrentCharacter = (character: number) => {
     dispatch(currentCharacterAction.setCharacter(character));
   };
 
@@ -78,7 +77,7 @@ export const CharactersList: React.FC = () => {
                   key={character.id}
                 >
                   <li
-                    onClick={() => changeCurrentCharacter(character)}
+                    onClick={() => changeCurrentCharacter(character.id)}
                   >
                     <CharactersItem character={character} />
                   </li>

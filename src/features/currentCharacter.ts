@@ -1,38 +1,13 @@
-import { Characters } from '../types/Characters';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type RemoveCharactersAction = { type: 'currentCharacters/REMOVE' };
-
-type SetCharactersAction = {
-  type: 'currentCharacters/SET';
-  payload: Characters;
-};
-
-const removeCharacter = (): RemoveCharactersAction => ({ type: 'currentCharacters/REMOVE' });
-
-const setCharacter = (Character: Characters): SetCharactersAction => ({
-  type: 'currentCharacters/SET',
-  payload: Character,
+const currentIdSlice = createSlice({
+  name: 'currentId',
+  initialState: 0,
+  reducers: {
+    setCharacter: (value, action: PayloadAction<number>) => value + action.payload,
+    clear: () => 0,
+  },
 });
 
-export const actions = { setCharacter, removeCharacter };
-
-type State = Characters | null;
-type Action = SetCharactersAction | RemoveCharactersAction;
-
-const currentCharacterReducer = (
-  state: State = null,
-  action: Action,
-): State => {
-  switch (action.type) {
-  case 'currentCharacters/SET':
-    return action.payload;
-
-  case 'currentCharacters/REMOVE':
-    return null;
-
-  default:
-    return state;
-  }
-};
-
-export default currentCharacterReducer;
+export default currentIdSlice.reducer;
+export const { actions } = currentIdSlice;

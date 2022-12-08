@@ -8,6 +8,7 @@ type Props = {
 
 export const CharactersItem: React.FC<Props> = ({ character }) => {
   const {name, image, gender, species, status } = character;
+
   return (
     <div className="character character__box">
       <img src={image} alt="" className="character__image" />

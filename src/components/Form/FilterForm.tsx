@@ -6,6 +6,11 @@ type Props = {
 }
 
 export const FilterForm: React.FC<Props> = ({ setQuery }) => {
+
+  const handleCheckQuery = (query: string) => {
+    setQuery(query);
+  };
+
   return (
     <div className="box">
       <div className="box__field">
@@ -16,10 +21,7 @@ export const FilterForm: React.FC<Props> = ({ setQuery }) => {
             id="search-query"
             className="box__input"
             placeholder="Type search word"
-            onChange={(event) => {
-              const { value } = event.target;
-              setQuery(value);
-            }}
+            onChange={(e) => handleCheckQuery(e.target.value)}
           />
         </div>
       </div>

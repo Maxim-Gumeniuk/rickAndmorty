@@ -9,6 +9,12 @@ export const getAllCharacters = () => {
     .catch(e => console.log(e));
 };
 
+export const getCharactersById = (param: number) => {
+  return axios(`${BASE_URL}/character/${param}`)
+    .then(data => data.data)
+    .catch(e => console.log(e));
+};
+
 export const getAllLocation = () => {
   return axios(`${BASE_URL}/location`)
     .then(data => data.data)

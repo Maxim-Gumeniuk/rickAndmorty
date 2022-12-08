@@ -56,7 +56,12 @@ export const CardCharactersOnLocation: React.FC<Props> = ({
   }
 
   const changeCurrentCharacter = (character: Characters) => {
-    dispatch(currentCharacterAction.setCharacter(character));
+    dispatch(currentCharacterAction.setCharacter(character.id));
+  };
+
+  const clearCurrentId = () => {
+    setCharacterOnLocation([]);
+    dispatch(currentCharacterAction.clear());
   };
 
   useEffect(() => {
@@ -68,12 +73,12 @@ export const CardCharactersOnLocation: React.FC<Props> = ({
       {loading ? (<> <div>
         <p
           className='back'
-          onClick={() => setCharacterOnLocation([])}
+          onClick={() => clearCurrentId()}
         >
           Back
         </p>
         <ul className='onLocation'>
-          {charOnLocation ? (
+          {charOnLocation && (
             charOnLocation
               .slice(firstContentIndex, lastContentIndex)
               .map((item) => (
@@ -89,7 +94,7 @@ export const CardCharactersOnLocation: React.FC<Props> = ({
                     <CardCharacterOnLocationitem person={item} />
                   </li>
                 </Link>
-              ))) : (<Loader />)}
+              )))}
         </ul>
       </div>
       <Pagination

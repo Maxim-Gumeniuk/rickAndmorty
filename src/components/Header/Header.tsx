@@ -1,8 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Header.scss';
+import { actions as currentCharacterAction} from '../../features/currentCharacter';
+import { useAppDispatch } from '../../app/hooks';
 
 export const Header = () => {
+  const dispatch = useAppDispatch();
+
+  const clearCurrentId = () => {
+    dispatch(currentCharacterAction.clear());
+  };
+
   return (
     <nav className='header__nav nav'>
       <ul className='nav__list'>
@@ -10,6 +18,7 @@ export const Header = () => {
           <NavLink
             to="/"
             className='nav__link'
+            onClick={() => clearCurrentId()}
           >
             Home
           </NavLink>
@@ -18,6 +27,7 @@ export const Header = () => {
           <NavLink
             to="Characters"
             className='nav__link'
+            onClick={() => clearCurrentId()}
           >
             Characters
           </NavLink>
@@ -26,6 +36,7 @@ export const Header = () => {
           <NavLink
             to="Locations"
             className='nav__link'
+            onClick={() => clearCurrentId()}
           >
             Locations
           </NavLink>
@@ -34,6 +45,7 @@ export const Header = () => {
           <NavLink
             to="Episodes"
             className='nav__link'
+            onClick={() => clearCurrentId()}
           >
             Episodes
           </NavLink>
@@ -42,3 +54,5 @@ export const Header = () => {
     </nav>
   );
 };
+
+
