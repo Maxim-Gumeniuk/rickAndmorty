@@ -25,7 +25,7 @@ export const CardId: React.FC = () => {
       setLoading(true);
     }
   }
-
+  
   const clearCurrentId = () => {
     dispatch(currentCharacterAction.clear());
   };

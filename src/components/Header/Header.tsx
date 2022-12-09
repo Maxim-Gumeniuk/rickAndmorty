@@ -6,7 +6,7 @@ import { useAppDispatch } from '../../app/hooks';
 
 export const Header = () => {
   const dispatch = useAppDispatch();
-
+  
   const clearCurrentId = () => {
     dispatch(currentCharacterAction.clear());
   };

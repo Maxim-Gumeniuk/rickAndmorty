@@ -22,6 +22,7 @@ export const getAllLocation = () => {
     .catch(e => console.log(e));
 };
 
+
 export const getAllEpisodes = () => {
   return axios(`${BASE_URL}/episode`)
     .then(data => data.data)

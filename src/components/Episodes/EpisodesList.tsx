@@ -14,7 +14,7 @@ export const EpisodeList: React.FC = () => {
   const [CharacterEpisode, setCharacterEpisode] = useState<string[]>([]);
   const [Episodes, setEpisodes] = useState<Episodes[]>([]);
   const [Query, setQuery] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); 
 
   const {
     firstContentIndex,
